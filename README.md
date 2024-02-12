@@ -27,3 +27,15 @@ do as follows:
       - target_label: __address__
         replacement: nrpe-exporter:9275 # Nrpe exporter.
 ```
+
+# Collect metrics
+
+1. Login to Grafana `http://localhost:3000` using admin:admin username/password
+2. Create a new Prometheus datasource by clicking `Connections` and then `datasource`
+3. Enter `http://prometheus:9090` and save the connection
+4. Build a dashboard with metrics collected. 
+
+
+## Important
+
+This project is a POC and by no means should be executed in production. There are many edge cases not being taken into account.
