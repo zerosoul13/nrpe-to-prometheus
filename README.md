@@ -34,7 +34,9 @@ do as follows:
 2. Create a new Prometheus datasource by clicking `Connections` and then `datasource`
 3. Enter `http://prometheus:9090` and save the connection
 4. Build a dashboard with metrics collected. 
+5. Profit
 
+![Grafana](NRPE-To-Prometheus.png)
 
 ## Important
 
