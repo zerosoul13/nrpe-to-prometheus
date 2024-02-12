@@ -41,7 +41,43 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: nrpe-exporter:9275 # Nrpe exporter.
+
+  - job_name: nrpe_check_memory
+    metrics_path: /export
+    params:
+      command: [check_memory] # Run the check_load command.
+      args: [-w2::-c5] # Arguments to pass to the command.
+      prefix: [check_nrpe_check_memory_]
+      #ssl: [true] # if using ssl
+    static_configs:
+      - targets: # Targets to run the specified command against.
+        - 'gateway.docker.internal:5666'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: nrpe-exporter:9275 # Nrpe exporter.
   
+  - job_name: nrpe_check_check_file_count
+    metrics_path: /export
+    params:
+      command: [check_file_count] # Run the check_load command.
+      args: [/tmp] # Arguments to pass to the command.
+      prefix: [check_nrpe_check_file_count]
+      #ssl: [true] # if using ssl
+    static_configs:
+      - targets: # Targets to run the specified command against.
+        - 'gateway.docker.internal:5666'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: nrpe-exporter:9275 # Nrpe exporter.
+
   # - job_name: node-exporter
   #   static_configs:
   #     - targets: ['gateway.docker.internal:9100']
