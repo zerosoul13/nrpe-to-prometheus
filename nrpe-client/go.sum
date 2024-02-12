@@ -1,0 +1,6 @@
+github.com/canonical/nrped v1.0.0 h1:A09kUmTCYBhC0x8UnC2+1VW3EYunW0/eVzpqELLH+ow=
+github.com/canonical/nrped v1.0.0/go.mod h1:Hk2pMfGcE+01M2qMjHnsvsp7pI0aYVuH9+SJlkmeY0I=
+github.com/droundy/goopt v0.0.0-20170604162106-0b8effe182da/go.mod h1:ytRJ64WkuW4kf6/tuYqBATBCRFUP8X9+LDtgcvE+koI=
+github.com/droundy/goopt v0.0.0-20220217183150-48d6390ad4d1 h1:6PKU05V7zJIJlTBq7AnEIrLVEUIYF4NjTU2a28Ho6ko=
+github.com/droundy/goopt v0.0.0-20220217183150-48d6390ad4d1/go.mod h1:ytRJ64WkuW4kf6/tuYqBATBCRFUP8X9+LDtgcvE+koI=
+github.com/jimlawless/cfg v0.0.0-20160326141742-136e0c264d31/go.mod h1:9qhdPWwVn7/FE1L4TF4rMIix5Lyx8ip5WnHpQ3RiPFk=

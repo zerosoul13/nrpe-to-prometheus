@@ -1,0 +1,48 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+scrape_configs:
+  - job_name: nrpe_check_load
+    metrics_path: /export
+    params:
+      command: [check_load] # Run the check_load command.
+      args: [-w5::-c10] # Arguments to pass to the command.
+      prefix: [check_nrpe_check_load_] # Prefix for the metrics.
+      #ssl: [true] # if using ssl
+    static_configs:
+      - targets: # Targets to run the specified command against.
+        - 'gateway.docker.internal:5666'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: nrpe-exporter:9275 # Nrpe exporter.
+  - job_name: nrpe_check_swap
+    metrics_path: /export
+    params:
+      command: [check_swap] # Run the check_load command.
+      args: [-w10::-c8] # Arguments to pass to the command.
+      prefix: [check_nrpe_check_swap_]
+      #ssl: [true] # if using ssl
+    static_configs:
+      - targets: # Targets to run the specified command against.
+        - 'gateway.docker.internal:5666'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: nrpe-exporter:9275 # Nrpe exporter.
+  
+  # - job_name: node-exporter
+  #   static_configs:
+  #     - targets: ['gateway.docker.internal:9100']
+  

@@ -1,0 +1,56 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /:/host:ro,rslave
+  
+  nrpe:
+    image: docker-nrpe:0.0.1
+    pid: host
+    ipc: host
+    privileged: true
+    volumes:
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /sys:/sys:ro
+      #- /var/run:/var/run:rw
+      - /:/rootfs:ro
+      - /proc:/host/proc:ro
+      - /:/mnt/ROOT
+      - ./nrpe/log/nrpe.log:/tmp/nrpe.log
+      - ./docker-nrpe/entrypoint.sh:/entrypoint.sh
+    ports:
+      - 5666:5666
+    environment:
+      - NAGIOS_SERVER=192.168.65.1
+
+  nrpe-exporter:
+    image: nrpe-exporter:0.0.1
+    ports:
+      - 9275:9275
+    environment:
+      - NRPE_HOST=nrpe
+      - NRPE_PORT=5666
+      - NRPE_PASSWORD=nrpe
